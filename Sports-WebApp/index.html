@@ -9,7 +9,7 @@
         <main>
             <div id="explanatory_text">
                 <h1>All your sports information here!</h1>
-                <p>
+                <p id="explanation">
                     This website will provide you with the sports
                     information you have been seeking. It includes
                     many sports leagues such as the NFL, NBA, WNBA,
@@ -19,7 +19,7 @@
             </div>
             <div id="inputs">
                 <div id="dropdown_functions">
-                    <label for="functions">What do you need: </label>
+                    <label for="functions" id="label_funct">What do you need: </label>
                     <select name="functions" id="functions">
                         <option value="event_details">Event Details</option>
                         <option value="sport_availvable">Available Sports</option>
@@ -29,7 +29,7 @@
                     </select>
                 </div>
                 <div id="user_input">
-                    <label for="user_input"></label>
+                    <label for="user_input">Input: </label>
                     <input name="user_input" id="user_input" />
                     <button id="button_submit">Submit</button>
                 </div>
