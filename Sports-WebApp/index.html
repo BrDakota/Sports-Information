@@ -21,22 +21,27 @@
                 <div id="dropdown_functions">
                     <label for="functions" id="label_funct">What do you need: </label>
                     <select name="functions" id="functions">
-                        <option value="event_details">Event Details</option>
-                        <option value="sport_availvable">Available Sports</option>
+                        <option value="sport_availvable" selected="selected">Available Sports</option>
                         <option value="event_sport_date">Events by sport and date</option>
+                        <option value="event_details">Event Details</option>
                         <option value="sport_schedule">Schedule for sport</option>
                         <option value="sport_teams">Get teams for sport</option>
                     </select>
+                    <p id="function_explanation"></p>
                 </div>
                 <div id="user_input">
-                    <label for="user_input">Input: </label>
-                    <input name="user_input" id="user_input" />
+                    <label for="sport_id_input">Sport Id: </label>
+                    <input name="sport_id_input" id="sport_id_input" />
+                    <label for="event_id_input">Event Id: </label>
+                    <input name="event_id_input" id="event_id_input" />
+                    <label for="date_input">Date: </label>
+                    <input name="date_input" id="date_input" />
                     <button id="button_submit">Submit</button>
                 </div>
             </div>
             <div id="results">
                 <label for="results_text">Your information: </label>
-                <span name="results_text" id="results_text"></span>
+                <div name="results_text" id="results_text"></div>
             </div>
         </main>
         <p id="ending_thanks">

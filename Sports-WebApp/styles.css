@@ -60,13 +60,14 @@ label{
     font-size: var(--size2);
 }
 
-#user_input, #functions{
+#sport_id_input, #functions, #event_id_input, #date_input, #user_input{
     display: block;
     margin-bottom: var(--size2);
     width: 50ch;
 }
 
 #results_text{
+    display: block;
     font-family: var(--font2) var(--font1);
     font-size: var(--size2);
 }
