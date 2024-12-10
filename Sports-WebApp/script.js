@@ -37,6 +37,9 @@ function get_data(){
   else if(entry_dropdown.value === "event_sport_date"){
     sport_events(sport_id_input.value, date_input.value);
   }
+  else if (entry_dropdown.value === "event_details"){
+    event_details(event_id_input.value);
+  }
 }
 
 async function available_sports(){
@@ -56,11 +59,37 @@ async function sport_events(sport_id, date){
 
   if(sport_id !== "" && date !== ""){
     for (let i = 0; i < data.events.length; i++){
-      result_text.innerHTML += `Event: ${i + 1}<br>\tTeam 1: ${data.events[i].teams[0].name}<br>\tTeam 2: ${data.events[i].teams[1].name}<br>\tEvent Id: ${data.events[i].event_id}<br><br>`;
+      result_text.innerHTML += `Event: ${i + 1}<br>Team 1: ${data.events[i].teams[0].name}<br>Team 2: ${data.events[i].teams[1].name}<br>Event Id: ${data.events[i].event_id}<br><br>`;
     }
   }else {
     // Add pop up here eventually
   }
+}
+
+async function event_details(event_id){
+  const response = await fetch(`https://api.apilayer.com/therundown/events/${event_id}?include=all_periods`, requestOptions);
+  const data = await response.json();
+  console.log(data);
+
+  let home = "";
+  let away = "";
+  let winner = "Not determined yet. Stay tuned!";
+  
+  if(data.teams[0].is_away){
+    home = data.teams[0].name;
+    away = data.teams[1].name;
+  }else{
+    home = data.teams[1].name;
+    away = data.teams[0].name;
+  }
+  if(data.score.winner_away === 1){
+    winner = away;
+  }else if(data.score.winner_home === 1){
+    winner = home;
+  }
+
+  result_text.innerHTML = `Event Name: <br>${data.schedule.event_name}<br><br>Score: <br>${home}: ${data.score.score_home}<br>${away}: ${data.score.score_away}
+  <br><br>Winner: <br>${winner}`;
 }
 
 button_submit.addEventListener("click", get_data);
