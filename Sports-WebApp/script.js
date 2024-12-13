@@ -20,15 +20,6 @@ const requestOptions = {
   headers: myHeaders
 }
 
-function input_change(){
-  if(entry_dropdown.value === "sport_available"){
-    function_explanation.textContent = "This function does not require any input. It will return the sports available through the API and the sport Id used for other options.";
-  }
-  else if(entry_dropdown.value === "event_sport_date"){
-    function_explanation.textContent = "This functions needs a date input and a Sport Id. It will return events for the sport and date entered with the event Id. Date format should be yyyy-mm-dd";
-  }
-}
-
 function get_data(){
   result_text.innerHTML = "";
   if(entry_dropdown.value === "sport_availvable"){
@@ -93,3 +84,14 @@ async function event_details(event_id){
 }
 
 button_submit.addEventListener("click", get_data);
+entry_dropdown.addEventListener("change", () => {
+  if(entry_dropdown.value === "sport_availvable"){
+    function_explanation.textContent = "This function does not require any input. It will return the sports available through the API and the sport Id used for other options.";
+  }
+  else if(entry_dropdown.value === "event_sport_date"){
+    function_explanation.textContent = "This functions needs a date input and a Sport Id. It will return events for the sport and date entered with the event Id. Date format should be yyyy-mm-dd";
+  }
+  else if (entry_dropdown.value === "event_details"){
+    function_explanation.textContent = "This function will take an event Id. It will return the winner of the game and the score. It will also return the name of the event."
+  }
+});
