@@ -13,7 +13,7 @@ const event_id_input = document.getElementById("event_id_input");
 const date_input = document.getElementById("date_input");
 
 const myHeaders = new Headers();
-myHeaders.append("apikey", 'YOUR API KEY');
+myHeaders.append("apikey", "YOUR API KEY");
 const requestOptions = {
   method: "GET",
   redirect: "follow",
@@ -30,6 +30,9 @@ function get_data(){
   }
   else if (entry_dropdown.value === "event_details"){
     event_details(event_id_input.value);
+  }
+  else if(entry_dropdown.value === "sport_schedule"){
+    sport_schedule(sport_id_input.value);
   }
 }
 
@@ -48,12 +51,8 @@ async function sport_events(sport_id, date){
   const data = await response.json();
   console.log(data);
 
-  if(sport_id !== "" && date !== ""){
-    for (let i = 0; i < data.events.length; i++){
-      result_text.innerHTML += `Event: ${i + 1}<br>Team 1: ${data.events[i].teams[0].name}<br>Team 2: ${data.events[i].teams[1].name}<br>Event Id: ${data.events[i].event_id}<br><br>`;
-    }
-  }else {
-    // Add pop up here eventually
+  for (let i = 0; i < data.events.length; i++){
+    result_text.innerHTML += `Event: ${i + 1}<br>Team 1: ${data.events[i].teams[0].name}<br>Team 2: ${data.events[i].teams[1].name}<br>Event Id: ${data.events[i].event_id}<br><br>`;
   }
 }
 
@@ -83,6 +82,16 @@ async function event_details(event_id){
   <br><br>Winner: <br>${winner}`;
 }
 
+async function sport_schedule(sport_id){
+  const response = await fetch(`https://api.apilayer.com/therundown/sports/${sport_id}/schedule?limit=50&from=`, requestOptions);
+  const data = await response.json();
+  console.log(data);
+
+  for (let i = 0; i < data.schedules.length; i++){
+    result_text.innerHTML += `Event: ${i + 1}<br>Away team: ${data.schedules[i].away_team}<br>Home team: ${data.schedules[i].home_team}<br>Season type: ${data.schedules[i].season_type}<br>Date & Time: ${data.schedules[i].event_status_detail}<br>Event Id: ${data.schedules[i].event_id}<br><br>`;
+  }
+}
+
 button_submit.addEventListener("click", get_data);
 entry_dropdown.addEventListener("change", () => {
   if(entry_dropdown.value === "sport_availvable"){
@@ -93,5 +102,8 @@ entry_dropdown.addEventListener("change", () => {
   }
   else if (entry_dropdown.value === "event_details"){
     function_explanation.textContent = "This function will take an event Id. It will return the winner of the game and the score. It will also return the name of the event."
+  }
+  else if(entry_dropdown.value === "sport_schedule"){
+    function_explanation.textContent = "This function will take a sport Id. It then returns the next 50 events for the sport on the schedule."
   }
 });
