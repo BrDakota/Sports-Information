@@ -13,7 +13,7 @@ const event_id_input = document.getElementById("event_id_input");
 const date_input = document.getElementById("date_input");
 
 const myHeaders = new Headers();
-myHeaders.append("apikey", "YOUR API KEY");
+myHeaders.append("apikey", "KGYMcGFgLWSqNtaKefqesNTwNRj6lSf6");
 const requestOptions = {
   method: "GET",
   redirect: "follow",
@@ -33,6 +33,9 @@ function get_data(){
   }
   else if(entry_dropdown.value === "sport_schedule"){
     sport_schedule(sport_id_input.value);
+  }
+  else if(entry_dropdown.value === "sport_teams"){
+    get_teams(sport_id_input.value);
   }
 }
 
@@ -92,6 +95,16 @@ async function sport_schedule(sport_id){
   }
 }
 
+async function get_teams(sport_id){
+  const response = await fetch(`https://api.apilayer.com/therundown/sports/${sport_id}/teams`, requestOptions);
+  const data = await response.json();
+  console.log(data);
+
+  for(let i = 0; i < data.teams.length; i++){
+    result_text.innerHTML += `Team Number: ${i+1}<br>Team: ${data.teams[i].name} ${data.teams[i].mascot}<br>Record: ${data.teams[i].record}<br><br>`;
+  }
+}
+
 button_submit.addEventListener("click", get_data);
 entry_dropdown.addEventListener("change", () => {
   if(entry_dropdown.value === "sport_availvable"){
@@ -101,9 +114,12 @@ entry_dropdown.addEventListener("change", () => {
     function_explanation.textContent = "This functions needs a date input and a Sport Id. It will return events for the sport and date entered with the event Id. Date format should be yyyy-mm-dd";
   }
   else if (entry_dropdown.value === "event_details"){
-    function_explanation.textContent = "This function will take an event Id. It will return the winner of the game and the score. It will also return the name of the event."
+    function_explanation.textContent = "This function will take an event Id. It will return the winner of the game and the score. It will also return the name of the event.";
   }
   else if(entry_dropdown.value === "sport_schedule"){
-    function_explanation.textContent = "This function will take a sport Id. It then returns the next 50 events for the sport on the schedule."
+    function_explanation.textContent = "This function will take a sport Id. It then returns the next 50 events for the sport on the schedule.";
+  }
+  else if(entry_dropdown.value === "sport_teams"){
+    function_explanation.textContent = "This function takes a sport Id. It returns the teams connected to the chosen sport with their record.";
   }
 });
